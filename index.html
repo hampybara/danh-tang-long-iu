@@ -95,6 +95,7 @@ const TEXT = {
   catPlannedLabel: "Ngân sách tháng này ($, để trống nếu chưa có)",
   catSaveBtn: "Lưu lại 💗",
   catCancelBtn: "Cancel",
+  catDeleteBtn: "🗑️ Xóa danh mục này",
 
   // --- Tab Biểu đồ ---
   chartsPageTitle: "BIỂU ĐỒ",
@@ -478,6 +479,7 @@ section.view.active{display:block;animation:fadein .2s}
     </div>
     <div class="field"><label id="catPlannedLabel"></label><input id="catPlanned" type="number" inputmode="decimal" min="0"></div>
     <button class="btn-primary" id="catSaveBtn"></button>
+    <button class="btn-ghost" id="catDeleteBtn" style="color:var(--rose-deep)"></button>
     <button class="btn-ghost" id="catCancelBtn"></button>
   </div>
 </div>
@@ -573,17 +575,18 @@ function actualOf(month, catId){
 }
 function calc(month){
   const cats = month.categories;
-  const income = cats.find(c => c.group === "income");
+  const incomeCats = cats.filter(c => c.group === "income");
   const nonIncome = cats.filter(c => c.group !== "income");
   const incomeActual = month.transactions.filter(t => t.group === "income").reduce((s,t)=>s+t.amount,0);
   const allocActual  = month.transactions.filter(t => t.group !== "income").reduce((s,t)=>s+t.amount,0);
   const allocPlanned = nonIncome.reduce((s,c) => s + (c.planned || 0), 0);
   const ef = cats.find(c => c.role === "emergency");
   const cc = cats.find(c => c.role === "ccpayoff");
+  const incomePlanned = incomeCats.reduce((s,c) => s + (c.planned || 0), 0);
   return {
-    incomePlanned: income ? (income.planned || 0) : 0,
+    incomePlanned,
     incomeActual, allocPlanned, allocActual,
-    leftoverPlanned: (income ? (income.planned||0) : 0) - allocPlanned,
+    leftoverPlanned: incomePlanned - allocPlanned,
     leftoverActual: incomeActual - allocActual,
     ef, cc,
     efPlanned: ef ? (ef.planned || 0) : null,
@@ -694,7 +697,6 @@ function renderBudget(){
       html += `<div class="bucket-card">
         ${cat.locked ? "" : `<div class="bc-tools">
           <button data-editcat="${cat.id}">✏️</button>
-          <button data-delcat="${cat.id}">✕</button>
         </div>`}
         <div class="bc-top">
           <div class="bc-name"><span>${esc(cat.emoji)}</span><span>${esc(cat.name)}</span></div>
@@ -708,9 +710,7 @@ function renderBudget(){
         </div>
       </div>`;
     }
-    if(g.key !== "income"){
-      html += `<button class="add-cat-card" data-addcat="${g.key}">${esc(TEXT.addCategoryCard)}</button>`;
-    }
+    html += `<button class="add-cat-card" data-addcat="${g.key}">${esc(TEXT.addCategoryCard)}</button>`;
     html += `</div>`;
   }
   document.getElementById("bucketSections").innerHTML = html;
@@ -914,11 +914,13 @@ function openCatModal(catId, defaultGroup){
   document.getElementById("catName").value = cat ? cat.name : "";
   document.getElementById("catEmoji").value = cat ? cat.emoji : "🌸";
   document.getElementById("catGroup").innerHTML =
-    `<option value="expense">${esc(TEXT.groupExpense)}</option><option value="saving">${esc(TEXT.groupSaving)}</option>`;
+    `<option value="expense">${esc(TEXT.groupExpense)}</option><option value="saving">${esc(TEXT.groupSaving)}</option><option value="income">${esc(TEXT.groupIncome)}</option>`;
   document.getElementById("catGroup").value = cat ? cat.group : (defaultGroup || "expense");
   document.getElementById("catPlanned").value = cat && cat.planned != null ? cat.planned : "";
   document.getElementById("emojiGrid").innerHTML = EMOJI_PICKS.map(e =>
     `<button data-emoji="${e}" class="${cat && cat.emoji === e ? "sel" : ""}">${e}</button>`).join("");
+  // Nút xóa chỉ hiện khi đang SỬA danh mục (không hiện khi thêm mới / danh mục khóa)
+  document.getElementById("catDeleteBtn").style.display = (cat && !cat.locked) ? "block" : "none";
   document.getElementById("catModal").classList.add("show");
 }
 function saveCatModal(){
@@ -979,7 +981,8 @@ function renderSettingsCats(){
       <select data-f="group" ${cat.locked ? "disabled" : ""}>
         ${cat.locked ? `<option selected>💰</option>` : `
         <option value="expense" ${cat.group==="expense"?"selected":""}>🛍️</option>
-        <option value="saving" ${cat.group==="saving"?"selected":""}>🐷</option>`}
+        <option value="saving" ${cat.group==="saving"?"selected":""}>🐷</option>
+        <option value="income" ${cat.group==="income"?"selected":""}>💰</option>`}
       </select>
       <input type="number" inputmode="decimal" min="0" value="${cat.planned ?? ""}" data-f="planned" placeholder="—">
       ${cat.locked ? "<span></span>" : `<button class="del" data-setdel="${cat.id}">✕</button>`}
@@ -1069,6 +1072,7 @@ function applyText(){
   document.getElementById("catPlannedLabel").textContent = TEXT.catPlannedLabel;
   document.getElementById("catSaveBtn").textContent = TEXT.catSaveBtn;
   document.getElementById("catCancelBtn").textContent = TEXT.catCancelBtn;
+  document.getElementById("catDeleteBtn").textContent = TEXT.catDeleteBtn;
   document.getElementById("settingsTitle").textContent = TEXT.settingsTitle;
   document.getElementById("settingsSub").textContent = TEXT.settingsSub;
   document.getElementById("lblIncome").textContent = TEXT.setIncome;
@@ -1198,8 +1202,6 @@ function bindEvents(){
     if(add){ openCatModal(null, add.dataset.addcat); return; }
     const edit = e.target.closest("[data-editcat]");
     if(edit){ openCatModal(edit.dataset.editcat); return; }
-    const del = e.target.closest("[data-delcat]");
-    if(del){ deleteCategory(del.dataset.delcat); return; }
   });
 
   // Charts
@@ -1217,6 +1219,10 @@ function bindEvents(){
     }
   });
   document.getElementById("catSaveBtn").addEventListener("click", saveCatModal);
+  document.getElementById("catDeleteBtn").addEventListener("click", () => {
+    document.getElementById("catModal").classList.remove("show");
+    if(editingCatId) deleteCategory(editingCatId);
+  });
   document.getElementById("catCancelBtn").addEventListener("click", () => document.getElementById("catModal").classList.remove("show"));
   document.getElementById("catModal").addEventListener("click", e => { if(e.target.id === "catModal") e.currentTarget.classList.remove("show"); });
 

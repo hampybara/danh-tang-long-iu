@@ -1,6 +1,6 @@
 /* Service worker cơ bản — cache app để mở offline được 💗
    Khi sửa code, tăng số version bên dưới lên 1 để iPhone tải bản mới. */
-const CACHE_NAME = "anhiu-budget-v2";
+const CACHE_NAME = "anhiu-budget-v3";
 const CORE_FILES = [
   "./",
   "./index.html",
