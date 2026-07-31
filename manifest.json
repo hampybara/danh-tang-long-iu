@@ -1,0 +1,16 @@
+{
+  "name": "Budget của anh iu 💗",
+  "short_name": "Budget 💗",
+  "description": "App theo dõi chi tiêu dễ thương — quà tặng làm bằng cả trái tim 🎀",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff5f8",
+  "theme_color": "#ffd6e2",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

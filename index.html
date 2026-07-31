@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Budget của anh iu 💗</title>
+<meta name="theme-color" content="#ffd6e2">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Budget 💗">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500;1,600;1,700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script>
+/* ================================================================
+   ✏️ TOÀN BỘ CÂU CHỮ CỦA APP NẰM Ở ĐÂY — MUỐN SỬA GÌ CỨ GÕ LẠI!
+   (Chỉ sửa phần chữ trong dấu nháy "..." — đừng xóa dấu phẩy nhé)
+   ================================================================ */
+const TEXT = {
+  // --- Tên app ---
+  appName: "Budget của anh iu 💗",
+
+  // --- Màn hình chào (mỗi lần mở app) ---
+  splashQuestion: "Anh iu chi tiền j đấyyy? 🥺",   // câu hỏi to ở trên
+  splashButton: "Để anh update ❤️",                // chữ trên nút
+  splashFooter: "made with 💗 by em iu",           // dòng chữ nhỏ dưới cùng
+
+  // --- 3 tab dưới cùng ---
+  tabJournal: "Nhật ký",
+  tabBudget: "Ngân sách",
+  tabCharts: "Biểu đồ",
+
+  // --- Nhật ký giao dịch ---
+  searchPlaceholder: "Tìm giao dịch... 🔍",
+  emptyJournal: "Chưa có giao dịch nào tháng này 🌷 Bấm nút + để thêm nè!",
+  emptySearch: "Không tìm thấy giao dịch nào 🥲",
+  deleteAsk: "Xóa?",              // chữ hiện ra khi bấm ✕ lần 1
+  todayLabel: "Hôm nay",
+  yesterdayLabel: "Hôm qua",
+
+  // --- Màn thêm giao dịch ---
+  addTitle: "Anh iu chi tiền j đấyyy? 🥺",
+  addNoteToggle: "+ thêm ghi chú",
+  addNotePlaceholder: "Ghi chú nhỏ xinh (không bắt buộc)...",
+  groupExpense: "🛍️ Chi tiêu",
+  groupSaving: "🐷 Tiết kiệm",
+  groupIncome: "💰 Thu nhập",
+  addHint: "Gõ số tiền rồi chạm 1 danh mục là xong 💌",
+  toastSaved: "Đã ghi lại rùi nè! 💖",
+  toastNeedAmount: "Nhập số tiền trước đã nha 🥹",
+  toastDeleted: "Đã xóa giao dịch 🗑️",
+
+  // --- Tab Ngân sách ---
+  budgetPageTitle: "MONTHLY BUDGET",
+  setBudgetFor: "Đặt ngân sách cho",     // "Đặt ngân sách cho Tháng 7 2026"
+  summaryTitle: "TỔNG QUAN THÁNG",
+  colPlanned: "Kế hoạch",
+  colActual: "Thực tế",
+  colStatus: "Trạng thái",
+  rowIncome: "Thu nhập",
+  rowAllocated: "Tổng đã phân bổ",
+  rowLeftover: "Còn dư / chưa phân bổ",
+  rowEmergency: "Quỹ khẩn cấp cuối tháng (ước tính)",
+  rowCcPayoff: "Quỹ trả nợ thẻ",
+  statusOk: "OK ✓",
+  statusWarn: "Âm rồi! ⚠️",
+  statusOnTrack: "Đang gom 🐷",
+  statusDone: "Đạt mục tiêu 🎉",
+  secIncome: "💰 Thu nhập",
+  secExpense: "🛍️ Chi tiêu",
+  secSaving: "🐷 Tiết kiệm & Trả nợ",
+  noBudgetSet: "Chưa đặt ngân sách",
+  setBudgetPlaceholder: "Đặt ngân sách $",
+  saveBtn: "Lưu",
+  remainingLabel: "Còn lại",
+  overLabel: "Vượt",
+  receivedLabel: "Đã nhận",
+  addCategoryCard: "+ Thêm danh mục mới",
+  toastBudgetSaved: "Đã lưu ngân sách 🎀",
+  toastCatDeleted: "Đã xóa danh mục 🗑️",
+  toastCatSaved: "Đã lưu danh mục 💕",
+  catHasTx: "Danh mục này có giao dịch trong tháng. Giao dịch cũ vẫn giữ trong Nhật ký. Xóa danh mục nha?",
+
+  // --- Modal thêm/sửa danh mục ---
+  catModalAddTitle: "Thêm danh mục mới 🌸",
+  catModalEditTitle: "Sửa danh mục ✏️",
+  catNameLabel: "Tên danh mục",
+  catNamePlaceholder: "VD: Cà phê, Gym...",
+  catEmojiLabel: "Chọn emoji",
+  catGroupLabel: "Nhóm",
+  catPlannedLabel: "Ngân sách tháng này ($, để trống nếu chưa có)",
+  catSaveBtn: "Lưu lại 💗",
+  catCancelBtn: "Thôi",
+
+  // --- Tab Biểu đồ ---
+  chartsPageTitle: "BIỂU ĐỒ",
+  periodWeek: "Tuần",
+  periodMonth: "Tháng",
+  periodYear: "Năm",
+  chartLineTitle: "Chi tiêu theo thời gian 📈",
+  chartBarTitle: "Kế hoạch vs Thực tế 📊",
+  chartDonutTitle: "Chi tiêu theo danh mục 🍩",
+  emptyChart: "Chưa có dữ liệu để vẽ 🥲 Thêm giao dịch trước nha!",
+
+  // --- Cài đặt (⚙️) ---
+  settingsTitle: "CÀI ĐẶT THÁNG",
+  settingsSub: "Áp dụng riêng cho tháng đang xem",
+  setIncome: "Thu nhập dự kiến tháng này ($)",
+  setStartCash: "Số dư tiền mặt / checking đầu tháng ($)",
+  set401k: "Cài đặt 401(k)",
+  setCcBalance: "Dư nợ thẻ tín dụng hiện tại ($)",
+  setCcNote: "Ghi chú thẻ (lãi suất, hạn...)",
+  setEfTarget: "Mục tiêu quỹ khẩn cấp tháng này ($)",
+  setCcTarget: "Mục tiêu trả thẻ tháng này ($)",
+  setCatsTitle: "Danh mục của tháng này",
+  setCatsHint: "Sửa trực tiếp rồi bấm Lưu hết ở dưới. Thêm/xóa cũng được ở tab Ngân sách nè.",
+  addCatBtn: "+ Thêm danh mục",
+  saveAllBtn: "Lưu hết 💗",
+  exportBtn: "📤 Xuất dữ liệu (backup)",
+  importBtn: "📥 Nhập dữ liệu",
+  toastSettingsSaved: "Đã lưu cài đặt 🎀",
+  toastImported: "Đã khôi phục dữ liệu 🎉",
+  toastImportError: "File không đúng định dạng 🥲",
+  importConfirm: "Nhập file này sẽ THAY THẾ toàn bộ dữ liệu hiện tại. Tiếp tục nha?",
+  closeBtn: "Đóng",
+
+  // --- Tên tháng ---
+  months: ["Tháng 1","Tháng 2","Tháng 3","Tháng 4","Tháng 5","Tháng 6","Tháng 7","Tháng 8","Tháng 9","Tháng 10","Tháng 11","Tháng 12"],
+};
+
+/* ================================================================
+   🗂️ DANH MỤC & CÀI ĐẶT MẶC ĐỊNH (bám theo file Excel July 2026)
+   — chỉ dùng cho tháng đầu tiên, sau đó mỗi tháng tự sao chép
+     từ tháng gần nhất trước đó và có thể chỉnh riêng.
+   ================================================================ */
+const DEFAULT_SETTINGS = {
+  startCash: 5600,                       // tiền mặt/checking đầu tháng
+  k401: "6% traditional",                // cài đặt 401(k)
+  ccBalance: 8700,                       // dư nợ thẻ tín dụng
+  ccNote: "0% APR đến 12/2026",          // ghi chú thẻ
+};
+const DEFAULT_CATEGORIES = [
+  // Income cố định — không xóa được (là mốc tính thu nhập)
+  { id: "income",    name: "Income",                   emoji: "💰", group: "income",  planned: 7750, locked: true },
+  { id: "rent",      name: "Rent/utilities",           emoji: "🏠", group: "expense", planned: 1050 },
+  { id: "food",      name: "Food",                     emoji: "🍜", group: "expense", planned: 650 },
+  { id: "transport", name: "Work transportation",      emoji: "🚇", group: "expense", planned: 80 },
+  { id: "bills",     name: "Misc bills + phone",       emoji: "📱", group: "expense", planned: 220 },
+  { id: "brother",   name: "Brother tuition",          emoji: "🎓", group: "expense", planned: 500 },
+  { id: "gf",        name: "Girlfriend/fun/travel",    emoji: "🎀", group: "expense", planned: 600 },
+  { id: "emergency", name: "Emergency fund",           emoji: "🚨", group: "saving",  planned: 2200, role: "emergency" },
+  { id: "ccpayoff",  name: "Credit card payoff fund",  emoji: "💳", group: "saving",  planned: 1740, role: "ccpayoff" },
+  { id: "invest",    name: "Investing/Roth/brokerage", emoji: "📈", group: "saving",  planned: 310 },
+  { id: "buffer",    name: "Buffer",                   emoji: "🛟", group: "saving",  planned: 400 },
+];
+// Emoji gợi ý khi tạo danh mục mới
+const EMOJI_PICKS = ["🍜","☕","🏠","🚇","📱","🎓","🎀","🚨","💳","📈","🛟","🛍️","🎮","💪","✈️","🐶","🎁","💊","💡","🧸","🌷","🍰"];
+</script>
+
+<style>
+/* ============ COQUETTE PINK PASTEL THEME ============ */
+:root{
+  --bg:#fff5f8; --bg-soft:#ffeef4; --card:#ffffff;
+  --pink-50:#fff0f5; --pink-100:#ffe3ee; --pink-200:#ffd1e3; --pink-300:#f9b8d0;
+  --rose:#f06292; --rose-deep:#e0447e; --rose-dark:#c2185b;
+  --plum:#5c3a4d; --plum-soft:#94707f; --mint:#7bc9a6; --gold:#f0b95c;
+  --border:#f7cfe0; --shadow:0 4px 18px rgba(240,98,146,.10);
+  --r-lg:22px; --r-md:16px;
+  --font-body:'Quicksand',-apple-system,'Segoe UI',sans-serif;
+  --font-fancy:'Playfair Display',Georgia,serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:var(--font-body); background:var(--bg); color:var(--plum);
+  background-image:radial-gradient(rgba(249,184,208,.35) 1.6px, transparent 1.6px);
+  background-size:26px 26px; overscroll-behavior-y:none;
+}
+button{font-family:var(--font-body);cursor:pointer;border:none;background:none}
+input,select,textarea{font-family:var(--font-body);color:var(--plum)}
+input:focus,select:focus{outline:2px solid var(--pink-300)}
+
+/* nền icon coquette lơ lửng */
+.bg-deco{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bg-deco span{position:absolute;opacity:.35;font-size:22px;animation:bob 6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-10px) rotate(6deg)}}
+
+/* ============ SPLASH ============ */
+#splash{position:fixed;inset:0;z-index:200;background:linear-gradient(180deg,#fff0f5,#ffe3ee);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:24px;text-align:center}
+#hearts{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+#hearts span{position:absolute;top:-40px;animation:fall linear infinite}
+@keyframes fall{to{transform:translateY(110vh) rotate(300deg)}}
+.splash-q{font-family:var(--font-fancy);font-style:italic;font-weight:600;font-size:clamp(24px,6.5vw,34px);color:var(--rose-dark);position:relative;z-index:2}
+.polaroid{background:#fff;padding:12px 12px 40px;border-radius:6px;box-shadow:0 10px 30px rgba(194,24,91,.18);
+  transform:rotate(-3deg);position:relative;z-index:2;max-width:min(64vw,250px)}
+.polaroid img{width:100%;display:block;border-radius:3px}
+.polaroid .tape{position:absolute;top:-14px;left:50%;transform:translateX(-50%) rotate(4deg);
+  width:96px;height:30px;background:linear-gradient(90deg,rgba(249,184,208,.85),rgba(255,209,227,.85));
+  border-left:2px dashed rgba(255,255,255,.7);border-right:2px dashed rgba(255,255,255,.7);border-radius:2px}
+.polaroid .caption{position:absolute;bottom:10px;left:0;right:0;font-family:var(--font-fancy);font-style:italic;font-size:15px;color:var(--plum-soft)}
+#splashBtn{position:relative;z-index:2;background:linear-gradient(135deg,var(--rose),var(--rose-deep));color:#fff;
+  font-size:19px;font-weight:700;padding:16px 38px;border-radius:999px;box-shadow:0 8px 22px rgba(224,68,126,.4);
+  transition:transform .15s}
+#splashBtn:active{transform:scale(.94)}
+.splash-foot{position:relative;z-index:2;font-size:13px;color:var(--plum-soft);font-style:italic}
+
+/* ============ APP FRAME ============ */
+#app{display:none;position:relative;z-index:1;min-height:100dvh;padding-bottom:calc(86px + env(safe-area-inset-bottom))}
+header{position:sticky;top:0;z-index:50;background:rgba(255,240,245,.92);backdrop-filter:blur(10px);
+  border-bottom:1.5px solid var(--pink-200);padding:calc(10px + env(safe-area-inset-top)) 14px 10px;
+  display:flex;align-items:center;gap:6px}
+.month-nav{display:flex;align-items:center;gap:2px;flex:1;justify-content:center}
+.arrow-btn{font-size:22px;color:var(--rose);width:40px;height:40px;border-radius:50%;font-weight:700}
+.arrow-btn:active{background:var(--pink-100)}
+.month-title{font-family:var(--font-fancy);font-style:italic;font-weight:700;font-size:20px;color:var(--rose-dark);min-width:150px;text-align:center}
+.gear-btn{font-size:22px;width:40px;height:40px;border-radius:50%}
+.gear-btn:active{background:var(--pink-100)}
+
+main{max-width:560px;margin:0 auto;padding:14px 14px 20px}
+section.view{display:none}
+section.view.active{display:block;animation:fadein .2s}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+
+/* tiêu đề trang kiểu serif in nghiêng, viết hoa, có gạch ngang hồng */
+.page-title{font-family:var(--font-fancy);font-style:italic;font-weight:600;letter-spacing:1px;
+  font-size:21px;color:var(--plum);text-transform:uppercase;display:flex;align-items:center;gap:8px;
+  padding-bottom:8px;border-bottom:1.5px solid var(--pink-300);margin:8px 2px 14px}
+
+.card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:16px;margin-bottom:14px}
+
+/* ============ JOURNAL ============ */
+.search-box{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:999px;background:#fff;font-size:15px;margin-bottom:14px}
+.day-label{font-size:13px;font-weight:700;color:var(--plum-soft);margin:14px 4px 6px;text-transform:uppercase;letter-spacing:.5px}
+.tx-row{background:#fff;border:1.5px solid var(--border);border-radius:var(--r-md);padding:11px 13px;margin-bottom:8px;
+  display:flex;align-items:center;gap:11px;box-shadow:0 2px 8px rgba(240,98,146,.06)}
+.tx-emoji{font-size:22px;width:42px;height:42px;border-radius:14px;background:var(--pink-50);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tx-info{flex:1;min-width:0}
+.tx-cat{font-weight:700;font-size:14.5px}
+.tx-note{font-size:12.5px;color:var(--plum-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tx-amt{font-weight:700;font-size:15px;white-space:nowrap}
+.tx-amt.income{color:var(--mint)} .tx-amt.expense{color:var(--rose-deep)} .tx-amt.saving{color:#b085c9}
+.tx-del{color:var(--pink-300);font-size:16px;padding:8px;border-radius:50%;font-weight:700}
+.tx-del.confirm{color:#fff;background:var(--rose-deep);font-size:11px;border-radius:999px;padding:6px 9px}
+.empty-note{text-align:center;color:var(--plum-soft);padding:36px 20px;font-size:14.5px;line-height:1.6}
+
+/* ============ BUDGET TAB ============ */
+.picker-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:16px;margin-bottom:16px;position:relative}
+.picker-card .bow{position:absolute;top:12px;right:14px;font-size:18px;opacity:.8}
+.picker-label{font-family:var(--font-fancy);font-style:italic;font-size:16.5px;color:var(--rose-dark);font-weight:600;margin-bottom:11px}
+.picker-row{display:flex;gap:10px}
+.picker-row select{flex:1;max-width:150px;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:#fff;font-size:15px;font-weight:600}
+
+.summary-table{width:100%;border-collapse:collapse;font-size:13.5px}
+.summary-table th{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--plum-soft);text-align:right;padding:4px 2px;font-weight:700}
+.summary-table th:first-child{text-align:left}
+.summary-table td{padding:7px 2px;border-top:1px dashed var(--pink-200);text-align:right;font-weight:600}
+.summary-table td:first-child{text-align:left;font-weight:700;font-size:13px}
+.st-ok{color:var(--mint);font-weight:700;font-size:12px} .st-warn{color:var(--rose-deep);font-weight:700;font-size:12px} .st-mid{color:var(--gold);font-weight:700;font-size:12px}
+
+.sec-head{font-weight:700;font-size:15px;margin:18px 4px 10px;color:var(--plum)}
+.bucket-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bucket-card{background:var(--pink-50);border:1.5px solid var(--border);border-radius:18px;padding:12px;position:relative}
+.bc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:6px;margin-bottom:2px}
+.bc-name{font-weight:700;font-size:13.5px;line-height:1.25;display:flex;gap:5px;align-items:flex-start}
+.bc-nums{font-size:11.5px;color:var(--plum-soft);font-weight:700;white-space:nowrap}
+.bc-sub{font-size:11.5px;color:var(--plum-soft);margin:3px 0 7px;min-height:15px}
+.bc-sub.over{color:var(--rose-deep);font-weight:700}
+.bc-bar{height:6px;background:var(--pink-200);border-radius:99px;overflow:hidden;margin-bottom:9px}
+.bc-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--rose),var(--rose-deep));border-radius:99px}
+.bc-bar i.over{background:linear-gradient(90deg,#f0b95c,var(--rose-deep))}
+.bc-input-row{display:flex;gap:6px}
+.bc-input-row input{flex:1;min-width:0;padding:8px 10px;border:1.5px solid var(--border);border-radius:11px;font-size:13px;background:#fff}
+.bc-save{background:linear-gradient(135deg,var(--rose),var(--rose-deep));color:#fff;font-weight:700;font-size:12.5px;
+  padding:8px 13px;border-radius:11px}
+.bc-save:active{transform:scale(.94)}
+.bc-tools{position:absolute;top:-8px;right:-6px;display:flex;gap:4px}
+.bc-tools button{width:24px;height:24px;border-radius:50%;background:#fff;border:1.5px solid var(--border);font-size:11px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(240,98,146,.15)}
+.add-cat-card{border:2px dashed var(--pink-300);border-radius:18px;background:transparent;min-height:104px;
+  display:flex;align-items:center;justify-content:center;color:var(--rose);font-weight:700;font-size:13.5px;width:100%}
+.add-cat-card:active{background:var(--pink-100)}
+
+/* ============ CHARTS ============ */
+.period-toggle{display:flex;background:var(--pink-100);border-radius:999px;padding:4px;margin-bottom:14px}
+.period-toggle button{flex:1;padding:9px;border-radius:999px;font-weight:700;font-size:13.5px;color:var(--plum-soft)}
+.period-toggle button.active{background:#fff;color:var(--rose-dark);box-shadow:0 2px 8px rgba(240,98,146,.18)}
+.chart-title{font-weight:700;font-size:14.5px;margin-bottom:10px}
+.bar-row{margin-bottom:11px}
+.bar-row .br-head{display:flex;justify-content:space-between;font-size:12.5px;font-weight:700;margin-bottom:4px}
+.bar-row .br-head small{color:var(--plum-soft);font-weight:600}
+.br-track{height:16px;background:var(--pink-100);border-radius:99px;position:relative;overflow:hidden}
+.br-plan{position:absolute;inset:0;background:var(--pink-200);border-radius:99px}
+.br-act{position:absolute;top:3px;bottom:3px;left:3px;background:linear-gradient(90deg,var(--rose),var(--rose-deep));border-radius:99px;min-width:2px}
+.br-act.over{background:linear-gradient(90deg,var(--gold),var(--rose-deep))}
+.legend{display:flex;flex-wrap:wrap;gap:7px 14px;margin-top:12px;font-size:12px;font-weight:600}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
+
+/* ============ FAB & TABBAR ============ */
+#fab{position:fixed;right:18px;bottom:calc(96px + env(safe-area-inset-bottom));z-index:60;
+  width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--rose-deep));
+  color:#fff;font-size:30px;font-weight:600;box-shadow:0 8px 22px rgba(224,68,126,.45);display:flex;align-items:center;justify-content:center}
+#fab:active{transform:scale(.92)}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);
+  border-top:1.5px solid var(--pink-200);display:flex;padding:8px 8px calc(8px + env(safe-area-inset-bottom))}
+.tabbar button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px;border-radius:14px;
+  font-size:11.5px;font-weight:700;color:var(--plum-soft)}
+.tabbar button .ic{font-size:21px}
+.tabbar button.active{color:var(--rose-dark);background:var(--pink-100)}
+
+/* ============ ADD SHEET ============ */
+.sheet-backdrop{position:fixed;inset:0;background:rgba(92,58,77,.35);z-index:90;opacity:0;pointer-events:none;transition:opacity .2s}
+.sheet-backdrop.show{opacity:1;pointer-events:auto}
+#addSheet{position:fixed;left:0;right:0;bottom:0;z-index:100;background:var(--bg);border-radius:26px 26px 0 0;
+  border-top:2px solid var(--pink-300);box-shadow:0 -10px 40px rgba(194,24,91,.2);
+  transform:translateY(105%);transition:transform .25s cubic-bezier(.3,1.1,.4,1);
+  padding:14px 16px calc(14px + env(safe-area-inset-bottom));max-height:92dvh;overflow-y:auto}
+#addSheet.show{transform:translateY(0)}
+.sheet-handle{width:44px;height:5px;background:var(--pink-300);border-radius:99px;margin:0 auto 10px}
+.sheet-title{font-family:var(--font-fancy);font-style:italic;font-weight:600;font-size:17px;color:var(--rose-dark);text-align:center;margin-bottom:8px}
+.amount-display{text-align:center;font-size:44px;font-weight:700;color:var(--plum);padding:6px 0 2px;min-height:60px;letter-spacing:1px}
+.amount-display .cur{color:var(--rose);font-size:30px;vertical-align:8px;margin-right:2px}
+.amount-display.zero{color:var(--pink-300)}
+.note-toggle{display:block;margin:0 auto 8px;color:var(--rose);font-weight:700;font-size:13px;padding:5px 12px;border-radius:99px}
+.note-toggle:active{background:var(--pink-100)}
+#noteInput{display:none;width:100%;padding:11px 15px;border:1.5px solid var(--border);border-radius:14px;font-size:14px;margin-bottom:10px;background:#fff}
+#noteInput.show{display:block}
+.group-seg{display:flex;background:var(--pink-100);border-radius:999px;padding:4px;margin-bottom:12px}
+.group-seg button{flex:1;padding:9px 4px;border-radius:999px;font-weight:700;font-size:13px;color:var(--plum-soft)}
+.group-seg button.active{background:#fff;color:var(--rose-dark);box-shadow:0 2px 8px rgba(240,98,146,.2)}
+.cat-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;max-height:180px;overflow-y:auto}
+.cat-chip{background:#fff;border:1.5px solid var(--border);border-radius:15px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:3px}
+.cat-chip .ce{font-size:22px}
+.cat-chip .cn{font-size:11px;font-weight:700;text-align:center;line-height:1.2}
+.cat-chip:active{background:var(--pink-100);transform:scale(.95)}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.keypad button{background:#fff;border:1.5px solid var(--border);border-radius:16px;font-size:24px;font-weight:700;
+  padding:13px 0;color:var(--plum);box-shadow:0 2px 6px rgba(240,98,146,.07)}
+.keypad button:active{background:var(--pink-100);transform:scale(.95)}
+.sheet-hint{text-align:center;font-size:11.5px;color:var(--plum-soft);margin-top:10px;font-style:italic}
+
+/* ============ MODALS ============ */
+.modal{position:fixed;inset:0;z-index:110;background:rgba(92,58,77,.4);display:none;align-items:flex-end;justify-content:center}
+.modal.show{display:flex}
+.modal-box{background:var(--bg);width:100%;max-width:560px;max-height:92dvh;overflow-y:auto;
+  border-radius:26px 26px 0 0;border-top:2px solid var(--pink-300);padding:18px 18px calc(20px + env(safe-area-inset-bottom))}
+.modal-title{font-family:var(--font-fancy);font-style:italic;font-weight:600;font-size:19px;color:var(--rose-dark);text-transform:uppercase;letter-spacing:.5px;
+  display:flex;align-items:center;gap:8px;padding-bottom:8px;border-bottom:1.5px solid var(--pink-300);margin-bottom:6px}
+.modal-sub{font-size:12.5px;color:var(--plum-soft);margin-bottom:14px;font-style:italic}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--plum-soft);margin-bottom:5px}
+.field input,.field select{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:14px;font-size:15px;background:#fff}
+.btn-primary{width:100%;background:linear-gradient(135deg,var(--rose),var(--rose-deep));color:#fff;font-weight:700;
+  font-size:16px;padding:15px;border-radius:999px;box-shadow:0 6px 18px rgba(224,68,126,.35);margin-top:6px}
+.btn-primary:active{transform:scale(.97)}
+.btn-ghost{width:100%;color:var(--plum-soft);font-weight:700;font-size:14px;padding:12px;margin-top:4px}
+.btn-soft{background:var(--pink-100);color:var(--rose-dark);font-weight:700;font-size:13.5px;padding:12px;border-radius:14px;width:100%}
+.emoji-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-top:6px}
+.emoji-grid button{font-size:21px;padding:7px 0;border-radius:11px;background:#fff;border:1.5px solid transparent}
+.emoji-grid button.sel{border-color:var(--rose);background:var(--pink-100)}
+.setcat-row{display:grid;grid-template-columns:44px 1fr 92px 80px 30px;gap:6px;align-items:center;margin-bottom:8px}
+.setcat-row input,.setcat-row select{padding:9px 8px;border:1.5px solid var(--border);border-radius:11px;font-size:13px;background:#fff;width:100%}
+.setcat-row .del{color:var(--rose-deep);font-size:15px;font-weight:700;text-align:center}
+.io-row{display:flex;gap:10px;margin-top:14px}
+
+/* ============ TOAST ============ */
+#toast{position:fixed;left:50%;bottom:calc(120px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);
+  background:#fff;border:2px solid var(--pink-300);color:var(--rose-dark);font-weight:700;font-size:14.5px;
+  padding:12px 22px;border-radius:999px;box-shadow:0 8px 24px rgba(224,68,126,.3);z-index:150;
+  opacity:0;pointer-events:none;transition:all .25s;white-space:nowrap}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media(min-width:480px){ .cat-chips{grid-template-columns:repeat(4,1fr)} }
+</style>
+</head>
+<body>
+
+<!-- icon coquette lơ lửng ở nền -->
+<div class="bg-deco" id="bgDeco"></div>
+
+<!-- ============ SPLASH ============ -->
+<div id="splash">
+  <div id="hearts"></div>
+  <div class="splash-q" id="splashQ"></div>
+  <div class="polaroid">
+    <div class="tape"></div>
+    <img src="photo.jpg" alt="em bé dễ thương">
+    <div class="caption">🎀 em iu hồi bé 🎀</div>
+  </div>
+  <button id="splashBtn"></button>
+  <div class="splash-foot" id="splashFoot"></div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app">
+  <header>
+    <div style="width:40px"></div>
+    <div class="month-nav">
+      <button class="arrow-btn" id="prevMonth">‹</button>
+      <div class="month-title" id="monthTitle"></div>
+      <button class="arrow-btn" id="nextMonth">›</button>
+    </div>
+    <button class="gear-btn" id="gearBtn">⚙️</button>
+  </header>
+
+  <main>
+    <!-- TAB 1: NHẬT KÝ -->
+    <section class="view" id="view-journal">
+      <input class="search-box" id="searchBox" type="search">
+      <div id="txList"></div>
+    </section>
+
+    <!-- TAB 2: NGÂN SÁCH -->
+    <section class="view" id="view-budget">
+      <div class="page-title">🎯 <span id="budgetPageTitle"></span></div>
+      <div class="picker-card">
+        <span class="bow">🎀</span>
+        <div class="picker-label" id="pickerLabel"></div>
+        <div class="picker-row">
+          <select id="monthSelect"></select>
+          <select id="yearSelect"></select>
+        </div>
+      </div>
+      <div class="card">
+        <div class="page-title" style="font-size:16px;margin-top:0">💗 <span id="summaryTitle"></span></div>
+        <div id="summaryPanel"></div>
+      </div>
+      <div id="bucketSections"></div>
+    </section>
+
+    <!-- TAB 3: BIỂU ĐỒ -->
+    <section class="view" id="view-charts">
+      <div class="page-title">📊 <span id="chartsPageTitle"></span></div>
+      <div class="period-toggle" id="periodToggle"></div>
+      <div class="card"><div class="chart-title" id="lineTitle"></div><div id="lineChart"></div></div>
+      <div class="card"><div class="chart-title" id="barTitle"></div><div id="barChart"></div></div>
+      <div class="card"><div class="chart-title" id="donutTitle"></div><div id="donutChart"></div></div>
+    </section>
+  </main>
+
+  <button id="fab">＋</button>
+  <nav class="tabbar">
+    <button data-tab="journal"><span class="ic">🌸</span><span id="tabJournalTxt"></span></button>
+    <button data-tab="budget"><span class="ic">🎯</span><span id="tabBudgetTxt"></span></button>
+    <button data-tab="charts"><span class="ic">📊</span><span id="tabChartsTxt"></span></button>
+  </nav>
+</div>
+
+<!-- ============ ADD TRANSACTION SHEET ============ -->
+<div class="sheet-backdrop" id="sheetBackdrop"></div>
+<div id="addSheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-title" id="addTitle"></div>
+  <div class="amount-display zero" id="amountDisplay"></div>
+  <button class="note-toggle" id="noteToggle"></button>
+  <input id="noteInput" type="text">
+  <div class="group-seg" id="groupSeg"></div>
+  <div class="cat-chips" id="catChips"></div>
+  <div class="keypad" id="keypad"></div>
+  <div class="sheet-hint" id="sheetHint"></div>
+</div>
+
+<!-- ============ CATEGORY MODAL ============ -->
+<div class="modal" id="catModal">
+  <div class="modal-box">
+    <div class="modal-title" id="catModalTitle"></div>
+    <div class="field"><label id="catNameLabel"></label><input id="catName" type="text"></div>
+    <div class="field"><label id="catEmojiLabel"></label>
+      <input id="catEmoji" type="text" maxlength="4" style="width:90px;text-align:center;font-size:22px">
+      <div class="emoji-grid" id="emojiGrid"></div>
+    </div>
+    <div class="field"><label id="catGroupLabel"></label>
+      <select id="catGroup"></select>
+    </div>
+    <div class="field"><label id="catPlannedLabel"></label><input id="catPlanned" type="number" inputmode="decimal" min="0"></div>
+    <button class="btn-primary" id="catSaveBtn"></button>
+    <button class="btn-ghost" id="catCancelBtn"></button>
+  </div>
+</div>
+
+<!-- ============ SETTINGS MODAL ============ -->
+<div class="modal" id="settingsModal">
+  <div class="modal-box">
+    <div class="modal-title">⚙️ <span id="settingsTitle"></span></div>
+    <div class="modal-sub" id="settingsSub"></div>
+    <div class="field"><label id="lblIncome"></label><input id="setIncome" type="number" inputmode="decimal" min="0"></div>
+    <div class="field"><label id="lblStartCash"></label><input id="setStartCash" type="number" inputmode="decimal"></div>
+    <div class="field"><label id="lbl401k"></label><input id="set401k" type="text"></div>
+    <div class="field"><label id="lblCcBalance"></label><input id="setCcBalance" type="number" inputmode="decimal"></div>
+    <div class="field"><label id="lblCcNote"></label><input id="setCcNote" type="text"></div>
+    <div class="field"><label id="lblEfTarget"></label><input id="setEfTarget" type="number" inputmode="decimal" min="0"></div>
+    <div class="field"><label id="lblCcTarget"></label><input id="setCcTarget" type="number" inputmode="decimal" min="0"></div>
+    <div class="page-title" style="font-size:15px;margin-top:18px">🗂️ <span id="setCatsTitle"></span></div>
+    <div class="modal-sub" id="setCatsHint"></div>
+    <div id="setCatsList"></div>
+    <button class="btn-soft" id="addCatBtn" style="margin-bottom:8px"></button>
+    <button class="btn-primary" id="saveAllBtn"></button>
+    <div class="io-row">
+      <button class="btn-soft" id="exportBtn"></button>
+      <button class="btn-soft" id="importBtn"></button>
+    </div>
+    <input type="file" id="importFile" accept=".json,application/json" style="display:none">
+    <button class="btn-ghost" id="settingsClose"></button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ================================================================
+   💾 DỮ LIỆU — lưu bằng localStorage ngay trên máy, riêng tư 100%
+   ================================================================ */
+const STORE_KEY = "anhiu-budget-v1";
+const CHART_COLORS = ["#f48fb1","#ce93d8","#ffcc80","#80deea","#a5d6a7","#fff59d","#ef9a9a","#b39ddb","#f8bbd0","#ffab91","#c5e1a5","#90caf9"];
+
+let db = loadDB();
+let viewKey = keyOf(new Date());          // tháng đang xem "2026-07"
+let activeTab = "journal";
+let chartPeriod = "month";
+let addState = { group: "expense", amount: "", noteOpen: false };
+let editingCatId = null;                  // null = đang thêm mới
+
+function loadDB(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(raw){ const d = JSON.parse(raw); if(d && d.months) return d; }
+  }catch(e){}
+  return { version: 1, months: {} };
+}
+function saveDB(){ localStorage.setItem(STORE_KEY, JSON.stringify(db)); }
+
+function keyOf(d){ return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0"); }
+function parseKey(k){ const [y,m] = k.split("-").map(Number); return {y, m}; }
+function shiftKey(k, delta){ const {y,m} = parseKey(k); const d = new Date(y, m-1+delta, 1); return keyOf(d); }
+function monthLabel(k){ const {y,m} = parseKey(k); return TEXT.months[m-1] + ", " + y; }
+
+/* Lấy dữ liệu tháng — nếu chưa có thì tự tạo, sao chép ngân sách
+   của tháng gần nhất TRƯỚC đó (carry-forward), giao dịch để trống */
+function getMonth(k){
+  if(db.months[k]) return db.months[k];
+  const prevKeys = Object.keys(db.months).filter(x => x < k).sort();
+  let src = null;
+  if(prevKeys.length) src = db.months[prevKeys[prevKeys.length-1]];
+  const month = src
+    ? { settings: JSON.parse(JSON.stringify(src.settings)),
+        categories: JSON.parse(JSON.stringify(src.categories)),
+        transactions: [] }
+    : { settings: JSON.parse(JSON.stringify(DEFAULT_SETTINGS)),
+        categories: JSON.parse(JSON.stringify(DEFAULT_CATEGORIES)),
+        transactions: [] };
+  db.months[k] = month;
+  saveDB();
+  return month;
+}
+
+/* ================================================================
+   🧮 TÍNH TOÁN
+   ================================================================ */
+function fmt(n){
+  if(n === null || n === undefined || isNaN(n)) return "—";
+  const neg = n < 0; n = Math.abs(n);
+  let s = n % 1 === 0 ? n.toLocaleString("en-US") : n.toLocaleString("en-US",{minimumFractionDigits:2, maximumFractionDigits:2});
+  return (neg ? "-$" : "$") + s;
+}
+function actualOf(month, catId){
+  return month.transactions.filter(t => t.catId === catId).reduce((s,t) => s + t.amount, 0);
+}
+function calc(month){
+  const cats = month.categories;
+  const income = cats.find(c => c.group === "income");
+  const nonIncome = cats.filter(c => c.group !== "income");
+  const incomeActual = month.transactions.filter(t => t.group === "income").reduce((s,t)=>s+t.amount,0);
+  const allocActual  = month.transactions.filter(t => t.group !== "income").reduce((s,t)=>s+t.amount,0);
+  const allocPlanned = nonIncome.reduce((s,c) => s + (c.planned || 0), 0);
+  const ef = cats.find(c => c.role === "emergency");
+  const cc = cats.find(c => c.role === "ccpayoff");
+  return {
+    incomePlanned: income ? (income.planned || 0) : 0,
+    incomeActual, allocPlanned, allocActual,
+    leftoverPlanned: (income ? (income.planned||0) : 0) - allocPlanned,
+    leftoverActual: incomeActual - allocActual,
+    ef, cc,
+    efPlanned: ef ? (ef.planned || 0) : null,
+    efActual: ef ? actualOf(month, ef.id) : null,
+    ccPlanned: cc ? (cc.planned || 0) : null,
+    ccActual: cc ? actualOf(month, cc.id) : null,
+  };
+}
+function esc(s){ return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function uid(){ return "c" + Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+
+/* ================================================================
+   🖼️ RENDER
+   ================================================================ */
+function renderHeader(){
+  document.getElementById("monthTitle").textContent = monthLabel(viewKey);
+}
+
+function renderJournal(){
+  const month = getMonth(viewKey);
+  const q = document.getElementById("searchBox").value.trim().toLowerCase();
+  let txs = [...month.transactions].sort((a,b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id));
+  if(q) txs = txs.filter(t => (t.name||"").toLowerCase().includes(q) || (t.note||"").toLowerCase().includes(q));
+  const box = document.getElementById("txList");
+  if(!txs.length){
+    box.innerHTML = `<div class="empty-note">${q ? esc(TEXT.emptySearch) : esc(TEXT.emptyJournal)}</div>`;
+    return;
+  }
+  const todayISO = new Date().toISOString().slice(0,10);
+  const yestISO = new Date(Date.now() - 864e5).toISOString().slice(0,10);
+  let html = "", lastDate = "";
+  for(const t of txs){
+    if(t.date !== lastDate){
+      lastDate = t.date;
+      let lbl;
+      if(t.date === todayISO) lbl = TEXT.todayLabel;
+      else if(t.date === yestISO) lbl = TEXT.yesterdayLabel;
+      else { const [y,m,d] = t.date.split("-"); lbl = d + "/" + m + "/" + y; }
+      html += `<div class="day-label">🌷 ${esc(lbl)}</div>`;
+    }
+    const cls = t.group === "income" ? "income" : (t.group === "saving" ? "saving" : "expense");
+    const sign = t.group === "income" ? "+" : "−";
+    html += `<div class="tx-row" data-id="${t.id}">
+      <div class="tx-emoji">${esc(t.emoji || "💗")}</div>
+      <div class="tx-info"><div class="tx-cat">${esc(t.name)}</div>${t.note ? `<div class="tx-note">${esc(t.note)}</div>` : ""}</div>
+      <div class="tx-amt ${cls}">${sign}${fmt(t.amount).replace("$","$")}</div>
+      <button class="tx-del" data-del="${t.id}">✕</button>
+    </div>`;
+  }
+  box.innerHTML = html;
+}
+
+function summaryRow(name, planned, actual, status){
+  return `<tr><td>${esc(name)}</td><td>${fmt(planned)}</td><td>${fmt(actual)}</td><td>${status || ""}</td></tr>`;
+}
+function renderBudget(){
+  const month = getMonth(viewKey);
+  const c = calc(month);
+  const {y, m} = parseKey(viewKey);
+
+  document.getElementById("pickerLabel").textContent = `${TEXT.setBudgetFor} ${TEXT.months[m-1]} ${y} 🌷`;
+  const ms = document.getElementById("monthSelect"), ys = document.getElementById("yearSelect");
+  ms.innerHTML = TEXT.months.map((n,i) => `<option value="${i+1}" ${i+1===m?"selected":""}>${esc(n)}</option>`).join("");
+  const nowY = new Date().getFullYear();
+  let years = new Set([y]); for(let yy = nowY-2; yy <= nowY+5; yy++) years.add(yy);
+  Object.keys(db.months).forEach(k => years.add(parseKey(k).y));
+  ys.innerHTML = [...years].sort().map(yy => `<option value="${yy}" ${yy===y?"selected":""}>${yy}</option>`).join("");
+
+  // ---- Summary panel ----
+  const stLeft = c.leftoverActual >= 0 ? `<span class="st-ok">${esc(TEXT.statusOk)}</span>` : `<span class="st-warn">${esc(TEXT.statusWarn)}</span>`;
+  let rows = "";
+  rows += summaryRow(TEXT.rowIncome, c.incomePlanned, c.incomeActual, "");
+  rows += summaryRow(TEXT.rowAllocated, c.allocPlanned, c.allocActual, "");
+  rows += summaryRow(TEXT.rowLeftover, c.leftoverPlanned, c.leftoverActual, stLeft);
+  if(c.ef){
+    const start = month.settings.startCash || 0;
+    rows += summaryRow(TEXT.rowEmergency, start + c.efPlanned, start + c.efActual, "");
+  }
+  if(c.cc){
+    const done = c.ccActual >= c.ccPlanned && c.ccPlanned > 0;
+    const st = done ? `<span class="st-ok">${esc(TEXT.statusDone)}</span>` : `<span class="st-mid">${esc(TEXT.statusOnTrack)}</span>`;
+    rows += summaryRow(TEXT.rowCcPayoff, c.ccPlanned, c.ccActual, st);
+  }
+  document.getElementById("summaryPanel").innerHTML =
+    `<table class="summary-table"><tr><th></th><th>${esc(TEXT.colPlanned)}</th><th>${esc(TEXT.colActual)}</th><th>${esc(TEXT.colStatus)}</th></tr>${rows}</table>`;
+
+  // ---- Bucket grid theo nhóm ----
+  const groups = [
+    { key:"income",  title: TEXT.secIncome },
+    { key:"expense", title: TEXT.secExpense },
+    { key:"saving",  title: TEXT.secSaving },
+  ];
+  let html = "";
+  for(const g of groups){
+    const cats = month.categories.filter(cat => cat.group === g.key);
+    html += `<div class="sec-head">${esc(g.title)}</div><div class="bucket-grid">`;
+    for(const cat of cats){
+      const actual = actualOf(month, cat.id);
+      const hasPlan = cat.planned !== null && cat.planned !== undefined && cat.planned !== "";
+      const planned = hasPlan ? Number(cat.planned) : null;
+      const pct = hasPlan && planned > 0 ? Math.min(100, actual/planned*100) : 0;
+      const over = hasPlan && actual > planned;
+      let sub;
+      if(!hasPlan) sub = esc(TEXT.noBudgetSet);
+      else if(cat.group === "income") sub = `${esc(TEXT.receivedLabel)} ${fmt(actual)}`;
+      else if(over) sub = `<span class="over">${esc(TEXT.overLabel)} ${fmt(actual - planned)} 😱</span>`;
+      else sub = `${esc(TEXT.remainingLabel)} ${fmt(planned - actual)}`;
+      html += `<div class="bucket-card">
+        ${cat.locked ? "" : `<div class="bc-tools">
+          <button data-editcat="${cat.id}">✏️</button>
+          <button data-delcat="${cat.id}">✕</button>
+        </div>`}
+        <div class="bc-top">
+          <div class="bc-name"><span>${esc(cat.emoji)}</span><span>${esc(cat.name)}</span></div>
+          <div class="bc-nums">${fmt(actual)} / ${hasPlan ? fmt(planned) : "—"}</div>
+        </div>
+        <div class="bc-sub">${sub}</div>
+        ${hasPlan && cat.group !== "income" ? `<div class="bc-bar"><i class="${over?"over":""}" style="width:${pct}%"></i></div>` : ""}
+        <div class="bc-input-row">
+          <input type="number" inputmode="decimal" min="0" placeholder="${esc(TEXT.setBudgetPlaceholder)}" data-planinput="${cat.id}" value="${hasPlan ? planned : ""}">
+          <button class="bc-save" data-plansave="${cat.id}">${esc(TEXT.saveBtn)}</button>
+        </div>
+      </div>`;
+    }
+    if(g.key !== "income"){
+      html += `<button class="add-cat-card" data-addcat="${g.key}">${esc(TEXT.addCategoryCard)}</button>`;
+    }
+    html += `</div>`;
+  }
+  document.getElementById("bucketSections").innerHTML = html;
+}
+
+/* ---- Biểu đồ (SVG tự vẽ, không cần thư viện) ---- */
+function renderCharts(){
+  const month = getMonth(viewKey);
+  document.getElementById("periodToggle").innerHTML = ["week","month","year"].map(p =>
+    `<button data-period="${p}" class="${p===chartPeriod?"active":""}">${esc(p==="week"?TEXT.periodWeek:p==="month"?TEXT.periodMonth:TEXT.periodYear)}</button>`).join("");
+
+  // === LINE: chi tiêu (không tính thu nhập) theo thời gian ===
+  let points = [], labels = [];
+  if(chartPeriod === "week"){
+    for(let i = 6; i >= 0; i--){
+      const d = new Date(Date.now() - i*864e5);
+      const iso = d.toISOString().slice(0,10);
+      const mk = keyOf(d);
+      const mm = db.months[mk];
+      const v = mm ? mm.transactions.filter(t => t.date === iso && t.group !== "income").reduce((s,t)=>s+t.amount,0) : 0;
+      points.push(v); labels.push(d.getDate() + "/" + (d.getMonth()+1));
+    }
+  } else if(chartPeriod === "month"){
+    const {y, m} = parseKey(viewKey);
+    const days = new Date(y, m, 0).getDate();
+    for(let d = 1; d <= days; d++){
+      const iso = `${y}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+      const v = month.transactions.filter(t => t.date === iso && t.group !== "income").reduce((s,t)=>s+t.amount,0);
+      points.push(v); labels.push(String(d));
+    }
+  } else {
+    const {y} = parseKey(viewKey);
+    for(let m = 1; m <= 12; m++){
+      const mk = `${y}-${String(m).padStart(2,"0")}`;
+      const mm = db.months[mk];
+      const v = mm ? mm.transactions.filter(t => t.group !== "income").reduce((s,t)=>s+t.amount,0) : 0;
+      points.push(v); labels.push("T" + m);
+    }
+  }
+  document.getElementById("lineChart").innerHTML = lineSVG(points, labels);
+
+  // === BAR: planned vs actual từng bucket (tháng đang xem) ===
+  const nonIncome = month.categories.filter(c => c.group !== "income");
+  const rows = nonIncome.map(c => ({ name: c.emoji + " " + c.name, planned: Number(c.planned)||0, actual: actualOf(month, c.id) }))
+    .filter(r => r.planned > 0 || r.actual > 0);
+  if(!rows.length){
+    document.getElementById("barChart").innerHTML = `<div class="empty-note">${esc(TEXT.emptyChart)}</div>`;
+  } else {
+    const max = Math.max(...rows.map(r => Math.max(r.planned, r.actual)));
+    document.getElementById("barChart").innerHTML = rows.map(r => {
+      const pw = max ? r.planned/max*100 : 0, aw = max ? Math.min(100, r.actual/max*100) : 0;
+      return `<div class="bar-row">
+        <div class="br-head"><span>${esc(r.name)}</span><small>${fmt(r.actual)} / ${fmt(r.planned)}</small></div>
+        <div class="br-track"><div class="br-plan" style="width:${pw}%"></div><div class="br-act ${r.actual>r.planned?"over":""}" style="width:calc(${aw}% - 6px)"></div></div>
+      </div>`;
+    }).join("") + `<div class="legend"><span><i style="background:var(--pink-200)"></i>${esc(TEXT.colPlanned)}</span><span><i style="background:var(--rose)"></i>${esc(TEXT.colActual)}</span></div>`;
+  }
+
+  // === DONUT: tỷ trọng chi tiêu thực tế theo danh mục ===
+  const slices = nonIncome.map((c,i) => ({ name: c.emoji + " " + c.name, v: actualOf(month, c.id) })).filter(s => s.v > 0);
+  document.getElementById("donutChart").innerHTML = slices.length ? donutSVG(slices) : `<div class="empty-note">${esc(TEXT.emptyChart)}</div>`;
+}
+
+function lineSVG(points, labels){
+  const W = 320, H = 150, P = 26;
+  const max = Math.max(...points, 1);
+  const n = points.length;
+  const x = i => P + i * (W - P*2) / Math.max(1, n-1);
+  const y = v => H - P - v / max * (H - P*2);
+  const path = points.map((v,i) => (i?"L":"M") + x(i).toFixed(1) + " " + y(v).toFixed(1)).join(" ");
+  const area = path + ` L ${x(n-1).toFixed(1)} ${H-P} L ${x(0).toFixed(1)} ${H-P} Z`;
+  const step = Math.ceil(n / 8);
+  let ticks = "";
+  for(let i = 0; i < n; i += step){
+    ticks += `<text x="${x(i)}" y="${H-8}" font-size="8.5" fill="#94707f" text-anchor="middle" font-family="Quicksand">${labels[i]}</text>`;
+  }
+  const dots = points.map((v,i) => v > 0 ? `<circle cx="${x(i)}" cy="${y(v)}" r="3" fill="#e0447e"/>` : "").join("");
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%">
+    <defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f06292" stop-opacity=".35"/><stop offset="1" stop-color="#f06292" stop-opacity="0"/></linearGradient></defs>
+    <line x1="${P}" y1="${H-P}" x2="${W-P}" y2="${H-P}" stroke="#f7cfe0" stroke-width="1.5"/>
+    <text x="${P}" y="14" font-size="9" fill="#94707f" font-family="Quicksand">max ${fmt(max)}</text>
+    <path d="${area}" fill="url(#lg)"/>
+    <path d="${path}" fill="none" stroke="#e0447e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    ${dots}${ticks}</svg>`;
+}
+function donutSVG(slices){
+  const total = slices.reduce((s,x) => s + x.v, 0);
+  const R = 55, CX = 80, CY = 80, SW = 26;
+  const C = 2 * Math.PI * R;
+  let off = 0, segs = "";
+  slices.forEach((s,i) => {
+    const frac = s.v / total;
+    segs += `<circle cx="${CX}" cy="${CY}" r="${R}" fill="none" stroke="${CHART_COLORS[i % CHART_COLORS.length]}"
+      stroke-width="${SW}" stroke-dasharray="${(frac*C).toFixed(2)} ${C.toFixed(2)}" stroke-dashoffset="${(-off*C).toFixed(2)}"
+      transform="rotate(-90 ${CX} ${CY})"/>`;
+    off += frac;
+  });
+  const legend = slices.map((s,i) =>
+    `<span><i style="background:${CHART_COLORS[i % CHART_COLORS.length]}"></i>${esc(s.name)} · ${fmt(s.v)} (${Math.round(s.v/total*100)}%)</span>`).join("");
+  return `<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <svg viewBox="0 0 160 160" style="width:150px;flex-shrink:0">${segs}
+      <text x="${CX}" y="${CY-3}" text-anchor="middle" font-size="11" fill="#94707f" font-family="Quicksand" font-weight="700">Tổng</text>
+      <text x="${CX}" y="${CY+13}" text-anchor="middle" font-size="13" fill="#5c3a4d" font-family="Quicksand" font-weight="700">${fmt(total)}</text>
+    </svg><div class="legend" style="flex-direction:column;align-items:flex-start;gap:6px;margin-top:0">${legend}</div></div>`;
+}
+
+function renderAll(){
+  renderHeader();
+  if(activeTab === "journal") renderJournal();
+  if(activeTab === "budget") renderBudget();
+  if(activeTab === "charts") renderCharts();
+}
+
+/* ================================================================
+   🧁 TOAST
+   ================================================================ */
+let toastTimer;
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 1600);
+}
+
+/* ================================================================
+   ➕ THÊM GIAO DỊCH — gõ số → chạm 1 category là lưu luôn
+   ================================================================ */
+function openSheet(){
+  addState = { group: "expense", amount: "", noteOpen: false };
+  document.getElementById("noteInput").value = "";
+  document.getElementById("noteInput").classList.remove("show");
+  renderSheet();
+  document.getElementById("addSheet").classList.add("show");
+  document.getElementById("sheetBackdrop").classList.add("show");
+}
+function closeSheet(){
+  document.getElementById("addSheet").classList.remove("show");
+  document.getElementById("sheetBackdrop").classList.remove("show");
+}
+function renderSheet(){
+  const disp = document.getElementById("amountDisplay");
+  const a = addState.amount;
+  disp.classList.toggle("zero", !a);
+  let shown = "0";
+  if(a){
+    const [intPart, decPart] = a.split(".");
+    shown = Number(intPart || 0).toLocaleString("en-US") + (a.includes(".") ? "." + (decPart || "") : "");
+  }
+  disp.innerHTML = `<span class="cur">$</span>${esc(shown)}`;
+  document.getElementById("groupSeg").innerHTML = [
+    ["expense", TEXT.groupExpense], ["saving", TEXT.groupSaving], ["income", TEXT.groupIncome]
+  ].map(([k,l]) => `<button data-group="${k}" class="${k===addState.group?"active":""}">${esc(l)}</button>`).join("");
+  const month = getMonth(keyOf(new Date()));   // giao dịch luôn ghi vào tháng hôm nay
+  const cats = month.categories.filter(c => c.group === addState.group);
+  document.getElementById("catChips").innerHTML = cats.map(c =>
+    `<button class="cat-chip" data-cat="${c.id}"><span class="ce">${esc(c.emoji)}</span><span class="cn">${esc(c.name)}</span></button>`).join("");
+}
+function keypadPress(k){
+  let a = addState.amount;
+  if(k === "back"){ a = a.slice(0, -1); }
+  else if(k === "."){ if(!a.includes(".")) a = (a || "0") + "."; }
+  else {
+    if(a.includes(".") && a.split(".")[1].length >= 2) return;
+    if(a === "0") a = k; else a += k;
+    if(a.replace(".","").length > 9) return;
+  }
+  addState.amount = a;
+  renderSheet();
+}
+function saveTransaction(catId){
+  const amount = parseFloat(addState.amount);
+  if(!amount || amount <= 0){ toast(TEXT.toastNeedAmount); return; }
+  const today = new Date();
+  const mk = keyOf(today);
+  const month = getMonth(mk);
+  const cat = month.categories.find(c => c.id === catId);
+  if(!cat) return;
+  month.transactions.push({
+    id: uid(),
+    date: today.toISOString().slice(0,10),
+    catId: cat.id,
+    name: cat.name, emoji: cat.emoji, group: cat.group,  // snapshot để lịch sử không bị lệch nếu sau này sửa/xóa category
+    note: document.getElementById("noteInput").value.trim(),
+    amount
+  });
+  saveDB();
+  closeSheet();
+  viewKey = mk;
+  toast(TEXT.toastSaved);
+  renderAll();
+}
+
+/* ================================================================
+   🗂️ MODAL DANH MỤC (thêm / sửa ngay trong tab Ngân sách)
+   ================================================================ */
+function openCatModal(catId, defaultGroup){
+  editingCatId = catId || null;
+  const month = getMonth(viewKey);
+  const cat = catId ? month.categories.find(c => c.id === catId) : null;
+  document.getElementById("catModalTitle").textContent = cat ? TEXT.catModalEditTitle : TEXT.catModalAddTitle;
+  document.getElementById("catName").value = cat ? cat.name : "";
+  document.getElementById("catEmoji").value = cat ? cat.emoji : "🌸";
+  document.getElementById("catGroup").innerHTML =
+    `<option value="expense">${esc(TEXT.groupExpense)}</option><option value="saving">${esc(TEXT.groupSaving)}</option>`;
+  document.getElementById("catGroup").value = cat ? cat.group : (defaultGroup || "expense");
+  document.getElementById("catPlanned").value = cat && cat.planned != null ? cat.planned : "";
+  document.getElementById("emojiGrid").innerHTML = EMOJI_PICKS.map(e =>
+    `<button data-emoji="${e}" class="${cat && cat.emoji === e ? "sel" : ""}">${e}</button>`).join("");
+  document.getElementById("catModal").classList.add("show");
+}
+function saveCatModal(){
+  const name = document.getElementById("catName").value.trim();
+  if(!name){ toast(TEXT.toastNeedAmount.replace("số tiền","tên")); return; }
+  const emoji = document.getElementById("catEmoji").value.trim() || "🌸";
+  const group = document.getElementById("catGroup").value;
+  const plannedRaw = document.getElementById("catPlanned").value;
+  const planned = plannedRaw === "" ? null : Math.max(0, parseFloat(plannedRaw) || 0);
+  const month = getMonth(viewKey);
+  if(editingCatId){
+    const cat = month.categories.find(c => c.id === editingCatId);
+    if(cat){ cat.name = name; cat.emoji = emoji; cat.group = group; cat.planned = planned; }
+  } else {
+    month.categories.push({ id: uid(), name, emoji, group, planned });
+  }
+  saveDB();
+  document.getElementById("catModal").classList.remove("show");
+  toast(TEXT.toastCatSaved);
+  renderAll();
+}
+function deleteCategory(catId){
+  const month = getMonth(viewKey);
+  const cat = month.categories.find(c => c.id === catId);
+  if(!cat || cat.locked) return;
+  const hasTx = month.transactions.some(t => t.catId === catId);
+  if(hasTx && !confirm(TEXT.catHasTx)) return;
+  month.categories = month.categories.filter(c => c.id !== catId);
+  saveDB();
+  toast(TEXT.toastCatDeleted);
+  renderAll();
+}
+
+/* ================================================================
+   ⚙️ CÀI ĐẶT THÁNG
+   ================================================================ */
+function openSettings(){
+  const month = getMonth(viewKey);
+  const c = calc(month);
+  const income = month.categories.find(x => x.group === "income");
+  document.getElementById("setIncome").value = income ? (income.planned ?? "") : "";
+  document.getElementById("setStartCash").value = month.settings.startCash ?? "";
+  document.getElementById("set401k").value = month.settings.k401 ?? "";
+  document.getElementById("setCcBalance").value = month.settings.ccBalance ?? "";
+  document.getElementById("setCcNote").value = month.settings.ccNote ?? "";
+  const efField = document.getElementById("setEfTarget"), ccField = document.getElementById("setCcTarget");
+  efField.value = c.ef ? (c.ef.planned ?? "") : ""; efField.disabled = !c.ef;
+  ccField.value = c.cc ? (c.cc.planned ?? "") : ""; ccField.disabled = !c.cc;
+  renderSettingsCats();
+  document.getElementById("settingsModal").classList.add("show");
+}
+function renderSettingsCats(){
+  const month = getMonth(viewKey);
+  document.getElementById("setCatsList").innerHTML = month.categories.map(cat => `
+    <div class="setcat-row" data-catid="${cat.id}">
+      <input type="text" maxlength="4" value="${esc(cat.emoji)}" data-f="emoji" style="text-align:center">
+      <input type="text" value="${esc(cat.name)}" data-f="name" ${cat.locked ? "readonly" : ""}>
+      <select data-f="group" ${cat.locked ? "disabled" : ""}>
+        ${cat.locked ? `<option selected>💰</option>` : `
+        <option value="expense" ${cat.group==="expense"?"selected":""}>🛍️</option>
+        <option value="saving" ${cat.group==="saving"?"selected":""}>🐷</option>`}
+      </select>
+      <input type="number" inputmode="decimal" min="0" value="${cat.planned ?? ""}" data-f="planned" placeholder="—">
+      ${cat.locked ? "<span></span>" : `<button class="del" data-setdel="${cat.id}">✕</button>`}
+    </div>`).join("");
+}
+function saveSettings(){
+  const month = getMonth(viewKey);
+  const income = month.categories.find(x => x.group === "income");
+  const num = id => { const v = document.getElementById(id).value; return v === "" ? null : (parseFloat(v) || 0); };
+  if(income) income.planned = num("setIncome") ?? 0;
+  month.settings.startCash = num("setStartCash") ?? 0;
+  month.settings.k401 = document.getElementById("set401k").value.trim();
+  month.settings.ccBalance = num("setCcBalance") ?? 0;
+  month.settings.ccNote = document.getElementById("setCcNote").value.trim();
+  const ef = month.categories.find(x => x.role === "emergency");
+  const cc = month.categories.find(x => x.role === "ccpayoff");
+  if(ef) ef.planned = num("setEfTarget");
+  if(cc) cc.planned = num("setCcTarget");
+  // lưu chỉnh sửa danh mục trong list
+  document.querySelectorAll("#setCatsList .setcat-row").forEach(row => {
+    const cat = month.categories.find(c => c.id === row.dataset.catid);
+    if(!cat) return;
+    const get = f => row.querySelector(`[data-f="${f}"]`);
+    cat.emoji = get("emoji").value.trim() || cat.emoji;
+    if(!cat.locked){
+      cat.name = get("name").value.trim() || cat.name;
+      cat.group = get("group").value;
+    }
+    const pv = get("planned").value;
+    cat.planned = pv === "" ? null : Math.max(0, parseFloat(pv) || 0);
+  });
+  saveDB();
+  toast(TEXT.toastSettingsSaved);
+  renderAll();
+  openSettings(); // refresh giá trị hiển thị
+}
+function exportData(){
+  const blob = new Blob([JSON.stringify(db, null, 2)], {type: "application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "budget-backup-" + new Date().toISOString().slice(0,10) + ".json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+function importData(file){
+  const reader = new FileReader();
+  reader.onload = () => {
+    try{
+      const d = JSON.parse(reader.result);
+      if(!d || typeof d.months !== "object") throw new Error("bad");
+      if(!confirm(TEXT.importConfirm)) return;
+      db = d; saveDB();
+      toast(TEXT.toastImported);
+      document.getElementById("settingsModal").classList.remove("show");
+      renderAll();
+    }catch(e){ toast(TEXT.toastImportError); }
+  };
+  reader.readAsText(file);
+}
+
+/* ================================================================
+   🎀 KHỞI TẠO GIAO DIỆN + GẮN SỰ KIỆN
+   ================================================================ */
+function applyText(){
+  document.title = TEXT.appName;
+  document.getElementById("splashQ").textContent = TEXT.splashQuestion;
+  document.getElementById("splashBtn").textContent = TEXT.splashButton;
+  document.getElementById("splashFoot").textContent = TEXT.splashFooter;
+  document.getElementById("tabJournalTxt").textContent = TEXT.tabJournal;
+  document.getElementById("tabBudgetTxt").textContent = TEXT.tabBudget;
+  document.getElementById("tabChartsTxt").textContent = TEXT.tabCharts;
+  document.getElementById("searchBox").placeholder = TEXT.searchPlaceholder;
+  document.getElementById("budgetPageTitle").textContent = TEXT.budgetPageTitle;
+  document.getElementById("summaryTitle").textContent = TEXT.summaryTitle;
+  document.getElementById("chartsPageTitle").textContent = TEXT.chartsPageTitle;
+  document.getElementById("lineTitle").textContent = TEXT.chartLineTitle;
+  document.getElementById("barTitle").textContent = TEXT.chartBarTitle;
+  document.getElementById("donutTitle").textContent = TEXT.chartDonutTitle;
+  document.getElementById("addTitle").textContent = TEXT.addTitle;
+  document.getElementById("noteToggle").textContent = TEXT.addNoteToggle;
+  document.getElementById("noteInput").placeholder = TEXT.addNotePlaceholder;
+  document.getElementById("sheetHint").textContent = TEXT.addHint;
+  document.getElementById("catNameLabel").textContent = TEXT.catNameLabel;
+  document.getElementById("catName").placeholder = TEXT.catNamePlaceholder;
+  document.getElementById("catEmojiLabel").textContent = TEXT.catEmojiLabel;
+  document.getElementById("catGroupLabel").textContent = TEXT.catGroupLabel;
+  document.getElementById("catPlannedLabel").textContent = TEXT.catPlannedLabel;
+  document.getElementById("catSaveBtn").textContent = TEXT.catSaveBtn;
+  document.getElementById("catCancelBtn").textContent = TEXT.catCancelBtn;
+  document.getElementById("settingsTitle").textContent = TEXT.settingsTitle;
+  document.getElementById("settingsSub").textContent = TEXT.settingsSub;
+  document.getElementById("lblIncome").textContent = TEXT.setIncome;
+  document.getElementById("lblStartCash").textContent = TEXT.setStartCash;
+  document.getElementById("lbl401k").textContent = TEXT.set401k;
+  document.getElementById("lblCcBalance").textContent = TEXT.setCcBalance;
+  document.getElementById("lblCcNote").textContent = TEXT.setCcNote;
+  document.getElementById("lblEfTarget").textContent = TEXT.setEfTarget;
+  document.getElementById("lblCcTarget").textContent = TEXT.setCcTarget;
+  document.getElementById("setCatsTitle").textContent = TEXT.setCatsTitle;
+  document.getElementById("setCatsHint").textContent = TEXT.setCatsHint;
+  document.getElementById("addCatBtn").textContent = TEXT.addCatBtn;
+  document.getElementById("saveAllBtn").textContent = TEXT.saveAllBtn;
+  document.getElementById("exportBtn").textContent = TEXT.exportBtn;
+  document.getElementById("importBtn").textContent = TEXT.importBtn;
+  document.getElementById("settingsClose").textContent = TEXT.closeBtn;
+}
+
+function initDeco(){
+  // icon coquette mờ mờ ở nền
+  const icons = ["🎀","🌷","🩰","🧸","⭐","✨","🌸","🐰","💌"];
+  const deco = document.getElementById("bgDeco");
+  let html = "";
+  for(let i = 0; i < 14; i++){
+    const ic = icons[i % icons.length];
+    html += `<span style="left:${Math.random()*92}%;top:${Math.random()*92}%;font-size:${16+Math.random()*14}px;animation-delay:${(Math.random()*5).toFixed(1)}s">${ic}</span>`;
+  }
+  deco.innerHTML = html;
+}
+function initHearts(){
+  // trái tim nhiều màu rơi ở splash
+  const colors = ["💗","❤️","💛","💜","💙","🩷","🧡","💚","🤍","💖"];
+  const box = document.getElementById("hearts");
+  let html = "";
+  for(let i = 0; i < 26; i++){
+    const h = colors[Math.floor(Math.random()*colors.length)];
+    const size = 12 + Math.random()*18;
+    const dur = 4 + Math.random()*6;
+    const delay = -Math.random()*8;
+    html += `<span style="left:${Math.random()*100}%;font-size:${size}px;animation-duration:${dur}s;animation-delay:${delay}s">${h}</span>`;
+  }
+  box.innerHTML = html;
+}
+function initKeypad(){
+  const keys = ["1","2","3","4","5","6","7","8","9",".","0","back"];
+  document.getElementById("keypad").innerHTML = keys.map(k =>
+    `<button data-key="${k}">${k === "back" ? "⌫" : k}</button>`).join("");
+}
+
+function bindEvents(){
+  // Splash
+  document.getElementById("splashBtn").addEventListener("click", () => {
+    document.getElementById("splash").style.display = "none";
+    document.getElementById("app").style.display = "block";
+    renderAll();
+  });
+
+  // Header
+  document.getElementById("prevMonth").addEventListener("click", () => { viewKey = shiftKey(viewKey, -1); renderAll(); });
+  document.getElementById("nextMonth").addEventListener("click", () => { viewKey = shiftKey(viewKey, +1); renderAll(); });
+  document.getElementById("gearBtn").addEventListener("click", openSettings);
+
+  // Tabs
+  document.querySelectorAll(".tabbar button").forEach(b => b.addEventListener("click", () => {
+    activeTab = b.dataset.tab;
+    document.querySelectorAll(".tabbar button").forEach(x => x.classList.toggle("active", x === b));
+    document.querySelectorAll("section.view").forEach(v => v.classList.toggle("active", v.id === "view-" + activeTab));
+    renderAll();
+  }));
+
+  // FAB + sheet
+  document.getElementById("fab").addEventListener("click", openSheet);
+  document.getElementById("sheetBackdrop").addEventListener("click", closeSheet);
+  document.getElementById("noteToggle").addEventListener("click", () => {
+    document.getElementById("noteInput").classList.toggle("show");
+    if(document.getElementById("noteInput").classList.contains("show")) document.getElementById("noteInput").focus();
+  });
+  document.getElementById("keypad").addEventListener("click", e => {
+    const b = e.target.closest("[data-key]"); if(b) keypadPress(b.dataset.key);
+  });
+  document.getElementById("groupSeg").addEventListener("click", e => {
+    const b = e.target.closest("[data-group]"); if(b){ addState.group = b.dataset.group; renderSheet(); }
+  });
+  document.getElementById("catChips").addEventListener("click", e => {
+    const b = e.target.closest("[data-cat]"); if(b) saveTransaction(b.dataset.cat);
+  });
+
+  // Journal
+  document.getElementById("searchBox").addEventListener("input", renderJournal);
+  document.getElementById("txList").addEventListener("click", e => {
+    const b = e.target.closest("[data-del]");
+    if(!b) return;
+    if(!b.classList.contains("confirm")){
+      document.querySelectorAll(".tx-del.confirm").forEach(x => { x.classList.remove("confirm"); x.textContent = "✕"; });
+      b.classList.add("confirm"); b.textContent = TEXT.deleteAsk;
+      setTimeout(() => { b.classList.remove("confirm"); b.textContent = "✕"; }, 2500);
+      return;
+    }
+    const month = getMonth(viewKey);
+    month.transactions = month.transactions.filter(t => t.id !== b.dataset.del);
+    saveDB(); toast(TEXT.toastDeleted); renderAll();
+  });
+
+  // Budget: dropdowns + grid actions
+  document.getElementById("monthSelect").addEventListener("change", onPickerChange);
+  document.getElementById("yearSelect").addEventListener("change", onPickerChange);
+  function onPickerChange(){
+    const m = document.getElementById("monthSelect").value;
+    const y = document.getElementById("yearSelect").value;
+    viewKey = `${y}-${String(m).padStart(2,"0")}`;
+    renderAll();
+  }
+  document.getElementById("bucketSections").addEventListener("click", e => {
+    const save = e.target.closest("[data-plansave]");
+    if(save){
+      const id = save.dataset.plansave;
+      const input = document.querySelector(`[data-planinput="${id}"]`);
+      const month = getMonth(viewKey);
+      const cat = month.categories.find(c => c.id === id);
+      if(cat){
+        cat.planned = input.value === "" ? null : Math.max(0, parseFloat(input.value) || 0);
+        saveDB(); toast(TEXT.toastBudgetSaved); renderBudget();
+      }
+      return;
+    }
+    const add = e.target.closest("[data-addcat]");
+    if(add){ openCatModal(null, add.dataset.addcat); return; }
+    const edit = e.target.closest("[data-editcat]");
+    if(edit){ openCatModal(edit.dataset.editcat); return; }
+    const del = e.target.closest("[data-delcat]");
+    if(del){ deleteCategory(del.dataset.delcat); return; }
+  });
+
+  // Charts
+  document.getElementById("periodToggle").addEventListener("click", e => {
+    const b = e.target.closest("[data-period]");
+    if(b){ chartPeriod = b.dataset.period; renderCharts(); }
+  });
+
+  // Category modal
+  document.getElementById("emojiGrid").addEventListener("click", e => {
+    const b = e.target.closest("[data-emoji]");
+    if(b){
+      document.getElementById("catEmoji").value = b.dataset.emoji;
+      document.querySelectorAll("#emojiGrid button").forEach(x => x.classList.toggle("sel", x === b));
+    }
+  });
+  document.getElementById("catSaveBtn").addEventListener("click", saveCatModal);
+  document.getElementById("catCancelBtn").addEventListener("click", () => document.getElementById("catModal").classList.remove("show"));
+  document.getElementById("catModal").addEventListener("click", e => { if(e.target.id === "catModal") e.currentTarget.classList.remove("show"); });
+
+  // Settings
+  document.getElementById("saveAllBtn").addEventListener("click", saveSettings);
+  document.getElementById("settingsClose").addEventListener("click", () => document.getElementById("settingsModal").classList.remove("show"));
+  document.getElementById("settingsModal").addEventListener("click", e => { if(e.target.id === "settingsModal") e.currentTarget.classList.remove("show"); });
+  document.getElementById("addCatBtn").addEventListener("click", () => {
+    document.getElementById("settingsModal").classList.remove("show");
+    openCatModal(null, "expense");
+  });
+  document.getElementById("setCatsList").addEventListener("click", e => {
+    const b = e.target.closest("[data-setdel]");
+    if(b){ deleteCategory(b.dataset.setdel); renderSettingsCats(); }
+  });
+  document.getElementById("exportBtn").addEventListener("click", exportData);
+  document.getElementById("importBtn").addEventListener("click", () => document.getElementById("importFile").click());
+  document.getElementById("importFile").addEventListener("change", e => {
+    if(e.target.files[0]) importData(e.target.files[0]);
+    e.target.value = "";
+  });
+}
+
+/* ---- Chạy app ---- */
+applyText();
+initDeco();
+initHearts();
+initKeypad();
+bindEvents();
+getMonth(viewKey);
+document.querySelector('.tabbar button[data-tab="journal"]').classList.add("active");
+document.getElementById("view-journal").classList.add("active");
+
+// Đăng ký service worker để dùng offline (chỉ chạy khi mở qua http/https)
+if("serviceWorker" in navigator && location.protocol.startsWith("http")){
+  navigator.serviceWorker.register("service-worker.js").catch(() => {});
+}
+</script>
+</body>
+</html>
