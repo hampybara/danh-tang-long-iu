@@ -534,6 +534,8 @@ function loadDB(){
 function saveDB(){ localStorage.setItem(STORE_KEY, JSON.stringify(db)); }
 
 function keyOf(d){ return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0"); }
+/* Ngày theo giờ ĐỊA PHƯƠNG của máy (không dùng UTC để khỏi lệch ngày vào buổi tối) */
+function localISO(d){ return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
 function parseKey(k){ const [y,m] = k.split("-").map(Number); return {y, m}; }
 function shiftKey(k, delta){ const {y,m} = parseKey(k); const d = new Date(y, m-1+delta, 1); return keyOf(d); }
 function monthLabel(k){ const {y,m} = parseKey(k); return TEXT.months[m-1] + ", " + y; }
@@ -610,8 +612,8 @@ function renderJournal(){
     box.innerHTML = `<div class="empty-note">${q ? esc(TEXT.emptySearch) : esc(TEXT.emptyJournal)}</div>`;
     return;
   }
-  const todayISO = new Date().toISOString().slice(0,10);
-  const yestISO = new Date(Date.now() - 864e5).toISOString().slice(0,10);
+  const todayISO = localISO(new Date());
+  const yestISO = localISO(new Date(Date.now() - 864e5));
   let html = "", lastDate = "";
   for(const t of txs){
     if(t.date !== lastDate){
@@ -725,7 +727,7 @@ function renderCharts(){
   if(chartPeriod === "week"){
     for(let i = 6; i >= 0; i--){
       const d = new Date(Date.now() - i*864e5);
-      const iso = d.toISOString().slice(0,10);
+      const iso = localISO(d);
       const mk = keyOf(d);
       const mm = db.months[mk];
       const v = mm ? mm.transactions.filter(t => t.date === iso && t.group !== "income").reduce((s,t)=>s+t.amount,0) : 0;
@@ -888,7 +890,7 @@ function saveTransaction(catId){
   if(!cat) return;
   month.transactions.push({
     id: uid(),
-    date: today.toISOString().slice(0,10),
+    date: localISO(today),
     catId: cat.id,
     name: cat.name, emoji: cat.emoji, group: cat.group,  // snapshot để lịch sử không bị lệch nếu sau này sửa/xóa category
     note: document.getElementById("noteInput").value.trim(),
