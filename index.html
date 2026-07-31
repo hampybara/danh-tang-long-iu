@@ -160,6 +160,8 @@ const DEFAULT_CATEGORIES = [
 ];
 // Emoji gợi ý khi tạo danh mục mới
 const EMOJI_PICKS = ["🍜","☕","🏠","🚇","📱","🎓","🎀","🚨","💳","📈","🛟","🛍️","🎮","💪","✈️","🐶","🎁","💊","💡","🧸","🌷","🍰"];
+// Bộ icon coquette — dùng chung cho icon rơi ở màn hình chào VÀ icon nền trong app
+const COQUETTE_ICONS = ["🎀","🌷","🩰","🧸","⭐","✨","🌸","🐰","💌"];
 </script>
 
 <style>
@@ -1093,7 +1095,7 @@ function applyText(){
 
 function initDeco(){
   // icon coquette mờ mờ ở nền
-  const icons = ["🎀","🌷","🩰","🧸","⭐","✨","🌸","🐰","💌"];
+  const icons = COQUETTE_ICONS;
   const deco = document.getElementById("bgDeco");
   let html = "";
   for(let i = 0; i < 14; i++){
@@ -1103,12 +1105,11 @@ function initDeco(){
   deco.innerHTML = html;
 }
 function initHearts(){
-  // trái tim nhiều màu rơi ở splash
-  const colors = ["💗","❤️","💛","💜","💙","🩷","🧡","💚","🤍","💖"];
+  // icon coquette rơi ở màn hình chào (cùng bộ với icon nền trong app)
   const box = document.getElementById("hearts");
   let html = "";
   for(let i = 0; i < 26; i++){
-    const h = colors[Math.floor(Math.random()*colors.length)];
+    const h = COQUETTE_ICONS[Math.floor(Math.random()*COQUETTE_ICONS.length)];
     const size = 12 + Math.random()*18;
     const dur = 4 + Math.random()*6;
     const delay = -Math.random()*8;
