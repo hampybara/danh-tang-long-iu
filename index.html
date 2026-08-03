@@ -36,7 +36,7 @@ const TEXT = {
 
   // --- Nhật ký giao dịch ---
   searchPlaceholder: "Tìm giao dịch... 🔍",
-  emptyJournal: "Chưa có giao dịch nào tháng này 🌷 Bấm nút + để thêm nè!",
+  emptyJournal: "Chưa có giao dịch nào 🌷 Bấm nút + để thêm nè!",
   emptySearch: "Không tìm thấy giao dịch nào 🥲",
   deleteAsk: "Xóa?",              // chữ hiện ra khi bấm ✕ lần 1
   todayLabel: "Hôm nay",
@@ -575,6 +575,12 @@ function fmt(n){
 function actualOf(month, catId){
   return month.transactions.filter(t => t.catId === catId).reduce((s,t) => s + t.amount, 0);
 }
+/* Gom giao dịch của TẤT CẢ các tháng thành 1 danh sách (kèm _mk = tháng đang chứa nó)
+   — dùng cho Nhật ký liên tục và biểu đồ theo ngày thực tế */
+function allTransactions(){
+  return Object.entries(db.months).flatMap(([mk, m]) =>
+    m.transactions.map(t => Object.assign({ _mk: mk }, t)));
+}
 function calc(month){
   const cats = month.categories;
   const incomeCats = cats.filter(c => c.group === "income");
@@ -608,9 +614,9 @@ function renderHeader(){
 }
 
 function renderJournal(){
-  const month = getMonth(viewKey);
+  // Nhật ký là dòng thời gian LIÊN TỤC: hiện giao dịch của mọi tháng, mới nhất trên cùng
   const q = document.getElementById("searchBox").value.trim().toLowerCase();
-  let txs = [...month.transactions].sort((a,b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id));
+  let txs = allTransactions().sort((a,b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id));
   if(q) txs = txs.filter(t => (t.name||"").toLowerCase().includes(q) || (t.note||"").toLowerCase().includes(q));
   const box = document.getElementById("txList");
   if(!txs.length){
@@ -635,7 +641,7 @@ function renderJournal(){
       <div class="tx-emoji">${esc(t.emoji || "💗")}</div>
       <div class="tx-info"><div class="tx-cat">${esc(t.name)}</div>${t.note ? `<div class="tx-note">${esc(t.note)}</div>` : ""}</div>
       <div class="tx-amt ${cls}">${sign}${fmt(t.amount).replace("$","$")}</div>
-      <button class="tx-del" data-del="${t.id}">✕</button>
+      <button class="tx-del" data-del="${t.id}" data-mk="${t._mk}">✕</button>
     </div>`;
   }
   box.innerHTML = html;
@@ -724,32 +730,30 @@ function renderCharts(){
   document.getElementById("periodToggle").innerHTML = ["week","month","year"].map(p =>
     `<button data-period="${p}" class="${p===chartPeriod?"active":""}">${esc(p==="week"?TEXT.periodWeek:p==="month"?TEXT.periodMonth:TEXT.periodYear)}</button>`).join("");
 
-  // === LINE: chi tiêu (không tính thu nhập) theo thời gian ===
+  // === LINE: chi tiêu (không tính thu nhập) theo NGÀY GHI TRÊN GIAO DỊCH,
+  //     quét toàn bộ dữ liệu mọi tháng để không sót giao dịch nào ===
+  const spendTx = allTransactions().filter(t => t.group !== "income");
+  const sumByDate = iso => spendTx.filter(t => t.date === iso).reduce((s,t) => s + t.amount, 0);
   let points = [], labels = [];
   if(chartPeriod === "week"){
     for(let i = 6; i >= 0; i--){
       const d = new Date(Date.now() - i*864e5);
-      const iso = localISO(d);
-      const mk = keyOf(d);
-      const mm = db.months[mk];
-      const v = mm ? mm.transactions.filter(t => t.date === iso && t.group !== "income").reduce((s,t)=>s+t.amount,0) : 0;
-      points.push(v); labels.push(d.getDate() + "/" + (d.getMonth()+1));
+      points.push(sumByDate(localISO(d)));
+      labels.push(d.getDate() + "/" + (d.getMonth()+1));
     }
   } else if(chartPeriod === "month"){
     const {y, m} = parseKey(viewKey);
     const days = new Date(y, m, 0).getDate();
     for(let d = 1; d <= days; d++){
-      const iso = `${y}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
-      const v = month.transactions.filter(t => t.date === iso && t.group !== "income").reduce((s,t)=>s+t.amount,0);
-      points.push(v); labels.push(String(d));
+      points.push(sumByDate(`${y}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`));
+      labels.push(String(d));
     }
   } else {
     const {y} = parseKey(viewKey);
     for(let m = 1; m <= 12; m++){
-      const mk = `${y}-${String(m).padStart(2,"0")}`;
-      const mm = db.months[mk];
-      const v = mm ? mm.transactions.filter(t => t.group !== "income").reduce((s,t)=>s+t.amount,0) : 0;
-      points.push(v); labels.push("T" + m);
+      const prefix = `${y}-${String(m).padStart(2,"0")}`;
+      points.push(spendTx.filter(t => t.date.startsWith(prefix)).reduce((s,t) => s + t.amount, 0));
+      labels.push("T" + m);
     }
   }
   document.getElementById("lineChart").innerHTML = lineSVG(points, labels);
@@ -1172,8 +1176,8 @@ function bindEvents(){
       setTimeout(() => { b.classList.remove("confirm"); b.textContent = "✕"; }, 2500);
       return;
     }
-    const month = getMonth(viewKey);
-    month.transactions = month.transactions.filter(t => t.id !== b.dataset.del);
+    const mk = b.dataset.mk;
+    if(db.months[mk]) db.months[mk].transactions = db.months[mk].transactions.filter(t => t.id !== b.dataset.del);
     saveDB(); toast(TEXT.toastDeleted); renderAll();
   });
 
